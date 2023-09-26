@@ -36,6 +36,7 @@ body {
   cursor: pointer;
 }
 
+/* Remove Borders from the board */
 .cell:first-child,
 .cell:nth-child(2),
 .cell:nth-child(3) {
@@ -56,11 +57,27 @@ body {
   border-bottom: none;
 }
 
+/* Not allowed to hover over existing Xs and Os (Marks) */
 .cell.x,
 .cell.circle {
   cursor: not-allowed;
 }
 
+/* Color of the X and O (Mark) */
+.cell.x::before,
+.cell.x::after,
+.cell.circle::before {
+  background-color: black;
+}
+
+/* Set the Hover Color of the X and O (Mark)  */
+.board.x .cell:not(.x):not(.circle):hover::before,
+.board.x .cell:not(.x):not(.circle):hover::after,
+.board.circle .cell:not(.x):not(.circle):hover::before {
+  background-color: lightgray;
+}
+
+/* Empty content, position and shape of the X */
 .cell.x::before,
 .cell.x::after,
 .board.x .cell:not(.x):not(.circle):hover::before,
@@ -68,37 +85,78 @@ body {
   content: " ";
   width: calc(var(--mark-size) * 0.15);
   height: var(--mark-size);
-  background-color: black;
   position: absolute;
 }
 
+/* The top-left to to bottom-right L */
 .cell.x::before,
 .board.x .cell:not(.x):not(.circle):hover::before {
   transform: rotate(45deg);
 }
 
+/* The bottom-left to top-right L  */
 .cell.x::after,
 .board.x .cell:not(.x):not(.circle):hover::after {
   transform: rotate(-45deg);
 }
 
+/* Empty content, position and shape of the O */
 .cell.circle::before,
-.cell.circle::after {
+.cell.circle::after,
+.board.circle .cell:not(.x):not(.circle):hover::before,
+.board.circle .cell:not(.x):not(.circle):hover::after {
   content: " ";
   position: absolute;
   border-radius: 50%;
 }
 
-.cell.circle::before {
+/* Big Black Circle */
+.cell.circle::before,
+.board.circle .cell:not(.x):not(.circle):hover::before {
   width: var(--mark-size);
   height: var(--mark-size);
-  background-color: black;
 }
 
-.cell.circle::after {
+/* Small White Circle */
+.cell.circle::after,
+.board.circle .cell:not(.x):not(.circle):hover::after {
   width: calc(var(--mark-size) * 0.7);
   height: calc(var(--mark-size) * 0.7);
   background-color: white;
 }
 
-/* 19.03 */
+.winning-message {
+  /* Display of none because we don't want to display this by default */
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 5rem;
+  flex-direction: column;
+}
+
+.winning-message button {
+  font-size: 3rem;
+  background-color: white;
+  border: 1px solid black;
+  padding: 0.25em 0.5em;
+  cursor: pointer;
+}
+
+.winning-message button:hover {
+  background-color: black;
+  color: white;
+  border: 1px solid white;
+}
+
+.winning-message.show {
+  display: flex;
+}
+
+/* 25.28 */
